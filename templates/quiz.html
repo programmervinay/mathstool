@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Quiz</title>
+</head>
+<body>
+    <div class="flex flex-col text-center w-full mb-12">
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Quiz Time!</h1>
+    <p class="text-gray-900 title-font text-lg font-medium " >Score: {{ score }}</p>
+    <form method="POST" action="/quiz">
+        <p class="text-gray-900 title-font text-lg font-medium " >What is {{ question.num1 }} x {{ question.num2 }}?</p>
+        <input type="number" name="answer"  style="border:2px solid black; border-radius: 5px;" class="mt-6 ml-5" required><br>
+        <button type="submit"  class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-6">Submit</button>
+    </form>
+    <p>Answer correctly to earn points. Incorrect answers will deduct points!</p>
+    <a href="/logout"><button class="bg-white text-pink-600 py-2 px-8 focus:outline-none hover:text-white hover:bg-pink-600 rounded text-lg mt-6 border-4 border-pink-200 border-t-pink-500">Logout</button></a>
+    </div>  
+</body>
+</html>
