@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Practice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    /* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Login section */
+#login {
+    text-align: center;
+}
+
+#login input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    width: 80%;
+    max-width: 300px;
+}
+
+#login button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#login button:hover {
+    background-color: #45a049;
+}
+
+/* Quiz section */
+#quiz {
+    text-align: center;
+}
+
+#quiz select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+}
+
+.slider-container {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.slider-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.slider-container input {
+    width: 80%;
+    max-width: 300px;
+}
+
+.slider-container span {
+    display: block;
+    margin-top: 0.5rem;
+    font-weight: bold;
+}
+
+/* Question section */
+#question {
+    text-align: center;
+}
+
+#questionText {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+#answer {
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+#question button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#question button:hover {
+    background-color: #0056b3;
+}
+
+/* End screen */
+#endScreen {
+    text-align: center;
+}
+
+#endScreen h2 {
+    color: #4CAF50;
+}
+
+#endScreen button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#endScreen button:hover {
+    background-color: #45a049;
+}
+
+/* Score display */
+.score {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+</style>
+<body>
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto flex items-center md:flex-row flex-col">
+          <div class="flex flex-col md:pr-10 md:mb-0 mb-6 pr-0 w-full md:w-auto md:text-left text-center">
+            <h2 class="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">ROOF PARTY POLAROID</h2>
+            <h1 class="md:text-3xl text-2xl font-medium title-font text-gray-900">Master Cleanse Reliac Heirloom</h1>
+          </div>
+          <div class="flex md:ml-auto md:mr-0 mx-auto items-center flex-shrink-0 space-x-4">
+           
+          </div>
+        </div>
+      </section>
+
+    <div class="container">
+        <div id="login">
+            <h2>Login</h2>
+            <input type="text" id="studentName" placeholder="Enter your name">
+            <button onclick="login()">Start</button>
+        </div>
+
+        <div id="quiz" class="hidden">
+            <h2>Welcome, <span id="welcomeName"></span>!</h2>
+            <p>Select the table you want to practice:</p>
+            <select id="tableSelect">
+                <option value="">Choose a table</option>
+                <option value="2">Table of 2</option>
+                <option value="3">Table of 3</option>
+                <option value="4">Table of 4</option>
+                <option value="5">Table of 5</option>
+                <option value="6">Table of 6</option>
+                <option value="7">Table of 7</option>
+                <option value="8">Table of 8</option>
+                <option value="9">Table of 9</option>
+                <option value="10">Table of 10</option>
+            </select>
+
+            <div class="slider-container">
+                <label for="questionCount">How many questions do you want to practice?</label>
+                <input type="range" id="questionCount" min="5" max="30" step="5" value="10" oninput="updateQuestionCountLabel()">
+                <span id="questionCountLabel">10</span>
+            </div>
+
+            <button onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <div id="question" class="hidden">
+            <p class="score">Score: <span id="score">0</span></p>
+            <p class="score">Highest Score: <span id="highestScore">0</span></p>
+            <p id="questionText"></p>
+            <input type="number" id="answer" placeholder="Your answer">
+            <button onclick="checkAnswer()">Submit</button>
+        </div>
+
+        <div id="endScreen" class="hidden">
+            <h2>Quiz Completed!</h2>
+            <p>Table Practiced: <span id="endTable"></span></p>
+            <p>Total Questions: <span id="totalQuestions"></span></p>
+            <p>Correct Answers: <span id="correctAnswers"></span></p>
+            <p>Wrong Answers: <span id="wrongAnswers"></span></p>
+            <p>Your Score: <span id="finalScore"></span></p>
+            <p>Highest Score: <span id="finalHighestScore"></span></p>
+            <button onclick="goBackToQuizSetup()">Practice Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Variables for tracking quiz state
+let currentQuestionIndex = 0;
+let currentTable = null;
+let questionCount = 10;
+let correctAnswers = 0;
+let highestScore = localStorage.getItem('highestScore') || 0;
+let questions = [];
+
+// Updates the question count label when the slider changes
+function updateQuestionCountLabel() {
+    const questionCountLabel = document.getElementById('questionCountLabel');
+    const questionCountSlider = document.getElementById('questionCount');
+    questionCountLabel.textContent = questionCountSlider.value;
+}
+
+// Handles the login process
+function login() {
+    const nameInput = document.getElementById('studentName');
+    const name = nameInput.value.trim();
+
+    if (name) {
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        document.getElementById('welcomeName').textContent = name;
+    } else {
+        alert('Please enter your name to proceed.');
+    }
+}
+
+// Starts the quiz
+function startQuiz() {
+    const tableSelect = document.getElementById('tableSelect');
+    const selectedTable = parseInt(tableSelect.value);
+    const questionCountSlider = document.getElementById('questionCount');
+
+    if (!selectedTable) {
+        alert('Please select a table to practice.');
+        return;
+    }
+
+    currentTable = selectedTable;
+    questionCount = parseInt(questionCountSlider.value);
+    correctAnswers = 0;
+    currentQuestionIndex = 0;
+
+    // Generate questions
+    questions = [];
+    for (let i = 0; i < questionCount; i++) {
+        const multiplier = Math.floor(Math.random() * 10) + 1;
+        questions.push({ multiplier, answer: currentTable * multiplier });
+    }
+
+    // Initialize the quiz
+    document.getElementById('quiz').classList.add('hidden');
+    document.getElementById('question').classList.remove('hidden');
+    document.getElementById('score').textContent = correctAnswers;
+    document.getElementById('highestScore').textContent = highestScore;
+
+    showNextQuestion();
+}
+
+// Displays the next question
+function showNextQuestion() {
+    if (currentQuestionIndex < questionCount) {
+        const currentQuestion = questions[currentQuestionIndex];
+        const questionText = document.getElementById('questionText');
+        questionText.textContent = `What is ${currentTable} x ${currentQuestion.multiplier}?`;
+    } else {
+        endQuiz();
+    }
+}
+
+// Checks the user's answer
+function checkAnswer() {
+    const answerInput = document.getElementById('answer');
+    const userAnswer = parseInt(answerInput.value);
+
+    if (!isNaN(userAnswer)) {
+        const currentQuestion = questions[currentQuestionIndex];
+        if (userAnswer === currentQuestion.answer) {
+            correctAnswers++;
+        }
+
+        currentQuestionIndex++;
+        answerInput.value = '';
+        document.getElementById('score').textContent = correctAnswers;
+        showNextQuestion();
+    } else {
+        alert('Please enter a valid number.');
+    }
+}
+
+// Ends the quiz and shows the end screen
+function endQuiz() {
+    const wrongAnswers = questionCount - correctAnswers;
+    const finalScore = correctAnswers;
+    highestScore = Math.max(highestScore, finalScore);
+    localStorage.setItem('highestScore', highestScore);
+
+    document.getElementById('question').classList.add('hidden');
+    document.getElementById('endScreen').classList.remove('hidden');
+
+    document.getElementById('endTable').textContent = currentTable;
+    document.getElementById('totalQuestions').textContent = questionCount;
+    document.getElementById('correctAnswers').textContent = correctAnswers;
+    document.getElementById('wrongAnswers').textContent = wrongAnswers;
+    document.getElementById('finalScore').textContent = finalScore;
+    document.getElementById('finalHighestScore').textContent = highestScore;
+}
+
+// Resets the app to the quiz setup
+function goBackToQuizSetup() {
+    document.getElementById('endScreen').classList.add('hidden');
+    document.getElementById('quiz').classList.remove('hidden');
+}
+
+    </script>
+</body>
+</html>
